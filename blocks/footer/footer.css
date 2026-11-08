@@ -9,6 +9,7 @@ footer {
   --lg-line: #444;
 
   margin-top: 64px;
+  border-radius: var(--radius-l, 28px) var(--radius-l, 28px) 0 0;
   background: var(--lg-bg);
   color: var(--lg-link);
   font-family: var(--body-font-family, Roboto, Arial, sans-serif);
