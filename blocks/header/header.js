@@ -78,6 +78,20 @@ function buildSections(fragment) {
 }
 
 /**
+ * Google Docs có thể bọc nội dung mỗi mục menu trong <p>, <strong>, <span>...
+ * Gỡ các lớp bọc đó để link luôn là con trực tiếp của <li> (CSS và JS bên dưới dựa vào điều này).
+ */
+function unwrapMenuItems(nav) {
+  nav.querySelectorAll('.nav-sections li').forEach((item) => {
+    let wrapper = [...item.children].find((el) => !el.matches('a, ul, ol, br'));
+    while (wrapper) {
+      wrapper.replaceWith(...wrapper.childNodes);
+      wrapper = [...item.children].find((el) => !el.matches('a, ul, ol, br'));
+    }
+  });
+}
+
+/**
  * Cấu trúc document /nav (chỉ cần đúng thứ tự):
  *  1. Logo (ảnh có link về trang chủ)
  *  2. Danh sách 3 cấp: cấp 1 = link danh mục, cấp 2 = tiêu đề cột, cấp 3 = link trong cột
@@ -101,6 +115,7 @@ export default async function decorate(block) {
     brandLink.closest('.button-container')?.classList.remove('button-container');
   }
 
+  unwrapMenuItems(nav);
   decorateTools(nav);
 
   // hamburger (mobile)
