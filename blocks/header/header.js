@@ -18,13 +18,45 @@ function toggleMenu(nav, button, force) {
 }
 
 /**
- * Cấu trúc document /nav (3 section, mỗi section cách nhau bằng ---):
- *  1. Brand  : logo (ảnh có link về trang chủ)
- *  2. Sections: danh sách 3 cấp
- *       - Cấp 1: link danh mục (TV, Tủ lạnh...)   -> hiển thị trên thanh menu
- *         - Cấp 2: tiêu đề cột (link)             -> tiêu đề cột trong mega menu
- *           - Cấp 3: link sản phẩm                -> link trong cột
- *  3. Tools  : danh sách link (Tìm kiếm, Giỏ hàng, Tài khoản...)
+ * Nhận diện 3 phần của header theo THỨ TỰ NỘI DUNG, không phụ thuộc vào đường kẻ ngang
+ * (section break) trong document /nav:
+ *   - brand   : mọi thứ đứng trước danh sách đầu tiên (logo)
+ *   - sections: danh sách đầu tiên (menu 3 cấp)
+ *   - tools   : danh sách thứ hai (Tìm kiếm, Giỏ hàng, Đăng nhập...)
+ * Document /nav có chia section hay không đều cho cùng một kết quả.
+ * @param {Element} fragment
+ * @returns {Element[]} các section đã dựng lại
+ */
+function buildSections(fragment) {
+  const items = [...fragment.querySelectorAll('.default-content-wrapper')]
+    .flatMap((wrapper) => [...wrapper.children]);
+  const lists = items.filter((el) => el.matches('ul, ol'));
+  const firstList = lists[0];
+  const brandItems = firstList ? items.slice(0, items.indexOf(firstList)) : items;
+
+  const make = (name, els) => {
+    if (!els.length) return null;
+    const section = document.createElement('div');
+    section.className = `section nav-${name}`;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'default-content-wrapper';
+    wrapper.append(...els);
+    section.append(wrapper);
+    return section;
+  };
+
+  return [
+    make('brand', brandItems),
+    make('sections', lists[0] ? [lists[0]] : []),
+    make('tools', lists[1] ? [lists[1]] : []),
+  ].filter(Boolean);
+}
+
+/**
+ * Cấu trúc document /nav (chỉ cần đúng thứ tự):
+ *  1. Logo (ảnh có link về trang chủ)
+ *  2. Danh sách 3 cấp: cấp 1 = link danh mục, cấp 2 = tiêu đề cột, cấp 3 = link trong cột
+ *  3. Danh sách link công cụ (Tìm kiếm, Giỏ hàng, Đăng nhập...)
  * @param {Element} block
  */
 export default async function decorate(block) {
@@ -35,15 +67,10 @@ export default async function decorate(block) {
   block.textContent = '';
   const nav = document.createElement('nav');
   nav.id = 'nav';
-  while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
-
-  ['brand', 'sections', 'tools'].forEach((name, i) => {
-    const section = nav.children[i];
-    if (section) section.classList.add(`nav-${name}`);
-  });
+  nav.append(...buildSections(fragment));
 
   // logo: bỏ style button mà decorateButtons có thể thêm vào
-  const brandLink = nav.querySelector('.nav-brand .button');
+  const brandLink = nav.querySelector('.nav-brand a');
   if (brandLink) {
     brandLink.className = '';
     brandLink.closest('.button-container')?.classList.remove('button-container');
