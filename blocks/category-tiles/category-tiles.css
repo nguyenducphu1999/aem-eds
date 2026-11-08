@@ -1,0 +1,62 @@
+.category-tiles ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.category-tiles .category-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-color);
+  text-align: center;
+  text-decoration: none;
+}
+
+.category-tiles .category-tile:hover {
+  color: var(--brand-color);
+  text-decoration: none;
+}
+
+.category-tiles .category-tile-media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 120px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--light-color);
+  transition: transform 0.2s;
+}
+
+.category-tiles .category-tile:hover .category-tile-media {
+  transform: translateY(-4px);
+}
+
+.category-tiles .category-tile-media img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+.category-tiles .category-tile-label {
+  font-size: var(--body-font-size-s);
+  font-weight: 700;
+}
+
+@media (width >= 900px) {
+  .category-tiles ul {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 24px 16px;
+  }
+
+  .category-tiles .category-tile-label {
+    font-size: var(--body-font-size-m);
+  }
+}

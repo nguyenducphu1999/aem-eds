@@ -1,9 +1,11 @@
-/* header and nav layout */
+/* header container */
 header .nav-wrapper {
-  background-color: var(--background-color);
-  width: 100%;
-  z-index: 2;
   position: fixed;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--background-color);
 }
 
 header nav {
@@ -13,35 +15,17 @@ header nav {
     'hamburger brand tools' var(--nav-height)
     'sections sections sections' 1fr / auto 1fr auto;
   align-items: center;
-  gap: 0 24px;
-  margin: auto;
-  max-width: 1248px;
-  height: var(--nav-height);
-  padding: 0 24px;
-  font-family: var(--body-font-family);
+  gap: 0 16px;
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  font-size: var(--body-font-size-s);
 }
 
 header nav[aria-expanded='true'] {
-  grid-template:
-    'hamburger brand' var(--nav-height)
-    'sections sections' 1fr
-    'tools tools' var(--nav-height) / auto 1fr;
-  overflow-y: auto;
   min-height: 100dvh;
-}
-
-@media (width >= 900px) {
-  header .nav-wrapper {
-    position: relative;
-  }
-
-  header nav {
-    display: flex;
-    justify-content: space-between;
-    gap: 0 32px;
-    max-width: 1264px;
-    padding: 0 32px;
-  }
+  overflow-y: auto;
+  grid-template-rows: var(--nav-height) 1fr;
 }
 
 header nav p {
@@ -50,224 +34,251 @@ header nav p {
 }
 
 header nav a:any-link {
-  color: currentcolor;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+header nav a:hover {
+  color: var(--brand-color);
 }
 
 /* hamburger */
 header nav .nav-hamburger {
   grid-area: hamburger;
-  height: 22px;
   display: flex;
   align-items: center;
 }
 
 header nav .nav-hamburger button {
-  height: 22px;
+  width: 40px;
+  height: 40px;
   margin: 0;
-  border: 0;
-  border-radius: 0;
   padding: 0;
-  background-color: var(--background-color);
-  color: inherit;
-  overflow: initial;
-  text-overflow: initial;
-  white-space: initial;
+  border: 0;
+  background: none;
+  cursor: pointer;
 }
 
 header nav .nav-hamburger-icon,
 header nav .nav-hamburger-icon::before,
 header nav .nav-hamburger-icon::after {
-  box-sizing: border-box;
   display: block;
   position: relative;
-  width: 20px;
-}
-
-header nav .nav-hamburger-icon::before,
-header nav .nav-hamburger-icon::after {
-  content: '';
-  position: absolute;
-  background: currentcolor;
-}
-
-header nav[aria-expanded='false'] .nav-hamburger-icon,
-header nav[aria-expanded='false'] .nav-hamburger-icon::before,
-header nav[aria-expanded='false'] .nav-hamburger-icon::after {
+  width: 22px;
   height: 2px;
-  border-radius: 2px;
-  background: currentcolor;
+  margin: 0 auto;
+  background: var(--text-color);
+  content: '';
+  transition: transform 0.2s, top 0.2s, background 0.2s;
 }
 
-header nav[aria-expanded='false'] .nav-hamburger-icon::before {
-  top: -6px;
+header nav .nav-hamburger-icon::before {
+  position: absolute;
+  top: -7px;
 }
 
-header nav[aria-expanded='false'] .nav-hamburger-icon::after {
-  top: 6px;
+header nav .nav-hamburger-icon::after {
+  position: absolute;
+  top: 7px;
 }
 
 header nav[aria-expanded='true'] .nav-hamburger-icon {
-  height: 22px;
+  background: transparent;
 }
 
-header nav[aria-expanded='true'] .nav-hamburger-icon::before,
-header nav[aria-expanded='true'] .nav-hamburger-icon::after {
-  top: 3px;
-  left: 1px;
+header nav[aria-expanded='true'] .nav-hamburger-icon::before {
+  top: 0;
   transform: rotate(45deg);
-  transform-origin: 2px 1px;
-  width: 24px;
-  height: 2px;
-  border-radius: 2px;
 }
 
 header nav[aria-expanded='true'] .nav-hamburger-icon::after {
-  top: unset;
-  bottom: 3px;
+  top: 0;
   transform: rotate(-45deg);
 }
 
-@media (width >= 900px) {
-  header nav .nav-hamburger {
-    display: none;
-    visibility: hidden;
-  }
+/* brand */
+header nav .nav-brand {
+  grid-area: brand;
+  justify-self: start;
 }
 
-/* brand */
-header .nav-brand {
-  grid-area: brand;
-  flex-basis: 128px;
-  font-size: var(--heading-font-size-s);
-  font-weight: 700;
-  line-height: 1;
+header nav .nav-brand .default-content-wrapper {
+  display: flex;
+  align-items: center;
 }
 
 header nav .nav-brand img {
-  width: 128px;
-  height: auto;
-}
-
-/* sections */
-header nav .nav-sections {
-  grid-area: sections;
-  flex: 1 1 auto;
-  display: none;
-  visibility: hidden;
-}
-
-header nav[aria-expanded='true'] .nav-sections {
-  display: block;
-  visibility: visible;
-  align-self: start;
-}
-
-header nav .nav-sections ul {
-  list-style: none;
-  padding-left: 0;
-  font-size: var(--body-font-size-s);
-}
-
-header nav .nav-sections ul > li {
-  font-weight: 500;
-}
-
-header nav .nav-sections .nav-drop > button {
-  all: unset;
-  display: inline-block;
-  position: relative;
-  padding-right: 16px;
-  cursor: pointer;
-}
-
-header nav .nav-sections .nav-drop > button::after {
-  content: '';
-  position: absolute;
-  top: 0.5em;
-  right: 2px;
-  transform: rotate(135deg);
-  width: 6px;
-  height: 6px;
-  border: 2px solid currentcolor;
-  border-radius: 0 1px 0 0;
-  border-width: 2px 2px 0 0;
-}
-
-header nav .nav-sections .nav-drop > button[aria-expanded='true']::after {
-  top: unset;
-  bottom: 0.5em;
-  transform: rotate(315deg);
-}
-
-header nav .nav-sections .nav-drop > button:focus-visible {
-  outline: 2px solid currentcolor;
-  outline-offset: 2px;
-}
-
-header nav .nav-sections ul > li > ul {
-  margin-top: 0;
-}
-
-header nav .nav-sections ul > li > ul > li {
-  font-weight: 400;
-}
-
-header nav .nav-sections .nav-drop > button[aria-expanded='false'] + ul {
-  display: none;
-}
-
-@media (width >= 900px) {
-  header nav .nav-sections {
-    display: block;
-    visibility: visible;
-    white-space: nowrap;
-  }
-
-  header nav .nav-sections ul {
-    display: flex;
-    gap: 24px;
-    margin: 0;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li {
-    flex: 0 1 auto;
-    position: relative;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li > ul {
-    display: none;
-    position: relative;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li > button[aria-expanded='true'] + ul {
-    display: block;
-    position: absolute;
-    left: -24px;
-    width: 200px;
-    top: 150%;
-    padding: 16px;
-    background-color: var(--light-color);
-    white-space: initial;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: 16px;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid var(--light-color);
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
-    padding: 8px 0;
-  }
+  width: auto;
+  height: 28px;
 }
 
 /* tools */
 header nav .nav-tools {
   grid-area: tools;
+}
+
+header nav .nav-tools ul {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+header nav .nav-tools li {
+  white-space: nowrap;
+}
+
+/* sections (mobile: accordion) */
+header nav .nav-sections {
+  grid-area: sections;
+  display: none;
+  padding-bottom: 24px;
+}
+
+header nav[aria-expanded='true'] .nav-sections {
+  display: block;
+}
+
+header nav .nav-sections ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+header nav .nav-sections .default-content-wrapper > ul > li {
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 700;
+}
+
+header nav .nav-sections .default-content-wrapper > ul > li > a {
+  display: block;
+  padding: 16px 0;
+  font-size: var(--body-font-size-m);
+}
+
+header nav .nav-sections .nav-drop > a::after {
+  float: right;
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border: solid currentcolor;
+  border-width: 0 2px 2px 0;
+  content: '';
+  transform: rotate(45deg);
+  transition: transform 0.2s;
+}
+
+header nav .nav-sections .nav-drop[aria-expanded='true'] > a::after {
+  margin-top: 10px;
+  transform: rotate(-135deg);
+}
+
+header nav .nav-sections .nav-drop > ul {
+  display: none;
+  padding: 0 0 16px 12px;
+}
+
+header nav .nav-sections .nav-drop[aria-expanded='true'] > ul {
+  display: block;
+}
+
+header nav .nav-sections .nav-drop > ul > li {
+  padding: 8px 0;
+  font-weight: 700;
+}
+
+header nav .nav-sections .nav-drop > ul > li > ul > li {
+  padding: 4px 0 4px 12px;
+  font-weight: 400;
+  color: var(--muted-color);
+}
+
+/* desktop */
+@media (width >= 900px) {
+  header nav {
+    grid-template: 'brand sections tools' var(--nav-height) / auto 1fr auto;
+    gap: 0 32px;
+  }
+
+  header nav .nav-hamburger {
+    display: none;
+  }
+
+  header nav .nav-sections {
+    display: block;
+    padding-bottom: 0;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul {
+    display: flex;
+    gap: 8px;
+    height: var(--nav-height);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 0;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > a {
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    border-bottom: 3px solid transparent;
+    font-size: var(--body-font-size-s);
+  }
+
+  header nav .nav-sections .nav-drop > a::after {
+    display: none;
+  }
+
+  header nav .nav-sections .nav-drop[aria-expanded='true'] > a {
+    border-bottom-color: var(--brand-color);
+    color: var(--brand-color);
+  }
+
+  /* mega panel: rộng full màn hình, bám vào .nav-wrapper (position: fixed) */
+  header nav .nav-sections .nav-drop > ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 24px 32px;
+    padding: 28px max(var(--gutter), calc((100% - var(--layout-max-width)) / 2 + var(--gutter)));
+    border-top: 1px solid var(--border-color);
+    background: var(--background-color);
+    box-shadow: 0 12px 24px rgb(0 0 0 / 10%);
+  }
+
+  header nav .nav-sections .nav-drop[aria-expanded='true'] > ul {
+    display: grid;
+  }
+
+  header nav .nav-sections .nav-drop > ul > li {
+    padding: 0;
+  }
+
+  header nav .nav-sections .nav-drop > ul > li > a {
+    display: block;
+    margin-bottom: 10px;
+    font-size: var(--body-font-size-m);
+  }
+
+  header nav .nav-sections .nav-drop > ul > li > ul > li {
+    padding: 4px 0;
+  }
+
+  header nav .nav-sections .nav-drop > ul > li > ul a {
+    color: var(--muted-color);
+    font-weight: 400;
+  }
+
+  header nav .nav-sections .nav-drop > ul > li > ul a:hover {
+    color: var(--brand-color);
+  }
 }

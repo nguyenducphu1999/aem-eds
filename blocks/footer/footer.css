@@ -1,20 +1,134 @@
 footer {
+  margin-top: 40px;
   background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
+  color: var(--text-color);
+  font-size: var(--body-font-size-s);
 }
 
 footer .footer > div {
-  margin: auto;
-  max-width: 1200px;
-  padding: 40px 24px 24px;
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
 }
 
-footer .footer p {
+footer a:any-link {
+  color: var(--muted-color);
+}
+
+footer a:hover {
+  color: var(--brand-color);
+}
+
+/* cột link */
+footer .footer-links .default-content-wrapper > ul {
   margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+footer .footer-links .default-content-wrapper > ul > li {
+  border-bottom: 1px solid var(--border-color);
+}
+
+footer .footer-col-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 16px 0;
+  border: 0;
+  background: none;
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: var(--body-font-size-m);
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+footer .footer-col-title::after {
+  width: 8px;
+  height: 8px;
+  border: solid currentcolor;
+  border-width: 0 2px 2px 0;
+  content: '';
+  transform: rotate(45deg);
+  transition: transform 0.2s;
+}
+
+footer .footer-col-title[aria-expanded='true']::after {
+  transform: rotate(-135deg);
+}
+
+footer .footer-links li ul {
+  display: none;
+  margin: 0;
+  padding: 0 0 16px;
+  list-style: none;
+}
+
+footer .footer-links li.open ul {
+  display: block;
+}
+
+footer .footer-links li li {
+  padding: 5px 0;
+}
+
+/* phần dưới */
+footer .footer-legal {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  color: var(--muted-color);
+  font-size: var(--body-font-size-xs);
+}
+
+footer .footer-legal p {
+  margin: 6px 0;
+}
+
+footer .footer-legal ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+footer .footer-legal img {
+  width: 24px;
+  height: 24px;
 }
 
 @media (width >= 900px) {
-  footer .footer > div {
-    padding: 40px 32px 24px;
+  footer .footer-links .default-content-wrapper > ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 32px;
+    padding: 40px 0 24px;
+  }
+
+  footer .footer-links .default-content-wrapper > ul > li {
+    border-bottom: 0;
+  }
+
+  footer .footer-col-title {
+    padding: 0 0 12px;
+    cursor: default;
+  }
+
+  footer .footer-col-title::after {
+    display: none;
+  }
+
+  footer .footer-links li ul {
+    display: block;
+    padding: 0;
+  }
+
+  footer .footer-legal {
+    border-top: 1px solid var(--border-color);
   }
 }
