@@ -5,10 +5,13 @@ footer {
   font-size: var(--body-font-size-s);
 }
 
-footer .footer > div {
+footer .footer .footer-links,
+footer .footer .footer-legal {
+  box-sizing: border-box;
   max-width: var(--layout-max-width);
   margin: 0 auto;
-  padding: 0 var(--gutter);
+  padding-right: var(--gutter);
+  padding-left: var(--gutter);
 }
 
 footer a:any-link {
