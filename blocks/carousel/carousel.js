@@ -23,8 +23,9 @@ function button(className, label, html) {
  * Hero carousel kiểu LG: ảnh banner bo góc lớn, thanh tiến trình + cụm nút điều khiển.
  * Mỗi dòng của bảng = 1 slide: [ảnh | nội dung]
  *  - Ô ảnh: 1 ảnh (dùng cho mọi màn hình) hoặc 2 ảnh (ảnh 1 = desktop, ảnh 2 = mobile).
- *  - Ô nội dung: link đầu tiên làm đích bấm của cả slide. Chữ trong ô này mặc định chỉ để đọc
- *    màn hình (vì ảnh banner thường đã có chữ). Dùng "Carousel (overlay)" để hiện chữ trên ảnh.
+ *  - Ô nội dung: tiêu đề, mô tả, nút hiện trên ảnh trong thẻ kính mờ. Link đầu tiên cũng làm
+ *    đích bấm của cả slide. Nếu ảnh banner đã có sẵn chữ, đặt tên block là "Carousel (image-only)"
+ *    để ẩn thẻ chữ (chữ vẫn có cho trình đọc màn hình).
  * @param {Element} block
  */
 export default function decorate(block) {
