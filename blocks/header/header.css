@@ -1,31 +1,54 @@
-/* header container */
+/* LG-style header v2 (mở file này trên site để kiểm tra đã deploy: dòng đầu phải là chữ "LG-style header v2") */
+
+header {
+  --lg-nav-h: 60px;
+  --lg-max: var(--layout-max-width, 1200px);
+  --lg-gutter: var(--gutter, 16px);
+  --lg-brand: var(--brand-color, #a50034);
+  --lg-text: #1d1d1f;
+  --lg-muted: #6b6b6b;
+  --lg-line: #e5e5e5;
+
+  height: var(--lg-nav-h);
+}
+
+@media (width >= 900px) {
+  header {
+    --lg-nav-h: 76px;
+    --lg-gutter: 32px;
+  }
+}
+
 header .nav-wrapper {
   position: fixed;
   top: 0;
+  left: 0;
   z-index: 100;
   width: 100%;
-  border-bottom: 1px solid var(--border-color);
-  background-color: var(--background-color);
+  border-bottom: 1px solid var(--lg-line);
+  background: #fff;
+  color: var(--lg-text);
 }
 
 header nav {
   box-sizing: border-box;
   display: grid;
   grid-template:
-    'hamburger brand tools' var(--nav-height)
-    'sections sections sections' 1fr / auto 1fr auto;
+    'hamburger brand tools' var(--lg-nav-h)
+    'sections sections sections' 1fr / 44px 1fr auto;
   align-items: center;
-  gap: 0 16px;
-  max-width: var(--layout-max-width);
+  gap: 0 8px;
+  max-width: var(--lg-max);
   margin: 0 auto;
-  padding: 0 var(--gutter);
-  font-size: var(--body-font-size-s);
+  padding: 0 var(--lg-gutter);
+  font-family: var(--body-font-family, Roboto, Arial, sans-serif);
+  font-size: 15px;
 }
 
 header nav[aria-expanded='true'] {
+  grid-template-rows: var(--lg-nav-h) 1fr;
   min-height: 100dvh;
   overflow-y: auto;
-  grid-template-rows: var(--nav-height) 1fr;
 }
 
 header nav p {
@@ -33,16 +56,18 @@ header nav p {
   line-height: 1;
 }
 
+header nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 header nav a:any-link {
-  color: var(--text-color);
+  color: var(--lg-text);
   text-decoration: none;
 }
 
-header nav a:hover {
-  color: var(--brand-color);
-}
-
-/* hamburger */
+/* ---------- hamburger ---------- */
 header nav .nav-hamburger {
   grid-area: hamburger;
   display: flex;
@@ -52,7 +77,7 @@ header nav .nav-hamburger {
 header nav .nav-hamburger button {
   width: 40px;
   height: 40px;
-  margin: 0;
+  margin: 0 0 0 -8px;
   padding: 0;
   border: 0;
   background: none;
@@ -67,7 +92,7 @@ header nav .nav-hamburger-icon::after {
   width: 22px;
   height: 2px;
   margin: 0 auto;
-  background: var(--text-color);
+  background: var(--lg-text);
   content: '';
   transition: transform 0.2s, top 0.2s, background 0.2s;
 }
@@ -96,10 +121,10 @@ header nav[aria-expanded='true'] .nav-hamburger-icon::after {
   transform: rotate(-45deg);
 }
 
-/* brand */
+/* ---------- brand ---------- */
 header nav .nav-brand {
   grid-area: brand;
-  justify-self: start;
+  justify-self: center;
 }
 
 header nav .nav-brand .default-content-wrapper {
@@ -107,12 +132,17 @@ header nav .nav-brand .default-content-wrapper {
   align-items: center;
 }
 
-header nav .nav-brand img {
-  width: auto;
-  height: 28px;
+header nav .nav-brand a {
+  display: block;
+  line-height: 0;
 }
 
-/* tools */
+header nav .nav-brand img {
+  width: auto;
+  height: 26px;
+}
+
+/* ---------- tools ---------- */
 header nav .nav-tools {
   grid-area: tools;
 }
@@ -120,42 +150,62 @@ header nav .nav-tools {
 header nav .nav-tools ul {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  gap: 4px;
 }
 
 header nav .nav-tools li {
   white-space: nowrap;
 }
 
-/* sections (mobile: accordion) */
+header nav .nav-tools a {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 8px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+header nav .nav-tools a:hover {
+  background: #f2f2f2;
+  color: var(--lg-brand);
+}
+
+header nav .nav-tools .nav-tool-icon {
+  justify-content: center;
+  width: 40px;
+  padding: 0;
+}
+
+header nav .nav-tools .nav-tool-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- sections (mobile: accordion) ---------- */
 header nav .nav-sections {
   grid-area: sections;
   display: none;
-  padding-bottom: 24px;
+  padding-bottom: 32px;
 }
 
 header nav[aria-expanded='true'] .nav-sections {
   display: block;
 }
 
-header nav .nav-sections ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
 header nav .nav-sections .default-content-wrapper > ul > li {
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--lg-line);
   font-weight: 700;
 }
 
 header nav .nav-sections .default-content-wrapper > ul > li > a {
   display: block;
-  padding: 16px 0;
-  font-size: var(--body-font-size-m);
+  padding: 18px 0;
+  font-size: 17px;
 }
 
 header nav .nav-sections .nav-drop > a::after {
@@ -177,7 +227,7 @@ header nav .nav-sections .nav-drop[aria-expanded='true'] > a::after {
 
 header nav .nav-sections .nav-drop > ul {
   display: none;
-  padding: 0 0 16px 12px;
+  padding: 0 0 16px 4px;
 }
 
 header nav .nav-sections .nav-drop[aria-expanded='true'] > ul {
@@ -185,25 +235,37 @@ header nav .nav-sections .nav-drop[aria-expanded='true'] > ul {
 }
 
 header nav .nav-sections .nav-drop > ul > li {
-  padding: 8px 0;
+  padding: 10px 0 4px;
   font-weight: 700;
 }
 
 header nav .nav-sections .nav-drop > ul > li > ul > li {
-  padding: 4px 0 4px 12px;
+  padding: 6px 0 6px 12px;
+  color: var(--lg-muted);
   font-weight: 400;
-  color: var(--muted-color);
 }
 
-/* desktop */
+header nav .nav-sections .nav-drop > ul > li > ul a:any-link {
+  color: var(--lg-muted);
+}
+
+/* ---------- desktop ---------- */
 @media (width >= 900px) {
   header nav {
-    grid-template: 'brand sections tools' var(--nav-height) / auto 1fr auto;
-    gap: 0 32px;
+    grid-template: 'brand sections tools' var(--lg-nav-h) / auto 1fr auto;
+    gap: 0 40px;
   }
 
   header nav .nav-hamburger {
     display: none;
+  }
+
+  header nav .nav-brand {
+    justify-self: start;
+  }
+
+  header nav .nav-brand img {
+    height: 30px;
   }
 
   header nav .nav-sections {
@@ -213,8 +275,8 @@ header nav .nav-sections .nav-drop > ul > li > ul > li {
 
   header nav .nav-sections .default-content-wrapper > ul {
     display: flex;
-    gap: 8px;
-    height: var(--nav-height);
+    gap: 4px;
+    height: var(--lg-nav-h);
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li {
@@ -224,35 +286,54 @@ header nav .nav-sections .nav-drop > ul > li > ul > li {
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > a {
+    position: relative;
     display: flex;
     align-items: center;
-    padding: 0 14px;
-    border-bottom: 3px solid transparent;
-    font-size: var(--body-font-size-s);
+    padding: 0 16px;
+    font-size: 16px;
+    transition: color 0.15s;
+  }
+
+  /* gạch chân trượt ra khi rê chuột */
+  header nav .nav-sections .default-content-wrapper > ul > li > a::before {
+    position: absolute;
+    right: 16px;
+    bottom: 0;
+    left: 16px;
+    height: 3px;
+    background: var(--lg-brand);
+    content: '';
+    transform: scaleX(0);
+    transition: transform 0.2s;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li:hover > a::before,
+  header nav .nav-sections .nav-drop[aria-expanded='true'] > a::before {
+    transform: scaleX(1);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li:hover > a,
+  header nav .nav-sections .nav-drop[aria-expanded='true'] > a {
+    color: var(--lg-brand);
   }
 
   header nav .nav-sections .nav-drop > a::after {
     display: none;
   }
 
-  header nav .nav-sections .nav-drop[aria-expanded='true'] > a {
-    border-bottom-color: var(--brand-color);
-    color: var(--brand-color);
-  }
-
-  /* mega panel: rộng full màn hình, bám vào .nav-wrapper (position: fixed) */
+  /* mega menu: panel rộng hết màn hình */
   header nav .nav-sections .nav-drop > ul {
     position: absolute;
     top: 100%;
-    left: 0;
     right: 0;
+    left: 0;
     z-index: 10;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 24px 32px;
-    padding: 28px max(var(--gutter), calc((100% - var(--layout-max-width)) / 2 + var(--gutter)));
-    border-top: 1px solid var(--border-color);
-    background: var(--background-color);
-    box-shadow: 0 12px 24px rgb(0 0 0 / 10%);
+    grid-template-columns: repeat(auto-fit, minmax(180px, 240px));
+    gap: 32px 56px;
+    padding: 40px max(var(--lg-gutter), calc((100% - var(--lg-max)) / 2 + var(--lg-gutter))) 48px;
+    border-top: 1px solid var(--lg-line);
+    background: #fff;
+    box-shadow: 0 16px 32px rgb(0 0 0 / 10%);
   }
 
   header nav .nav-sections .nav-drop[aria-expanded='true'] > ul {
@@ -265,20 +346,27 @@ header nav .nav-sections .nav-drop > ul > li > ul > li {
 
   header nav .nav-sections .nav-drop > ul > li > a {
     display: block;
-    margin-bottom: 10px;
-    font-size: var(--body-font-size-m);
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--lg-line);
+    font-size: 16px;
+  }
+
+  header nav .nav-sections .nav-drop > ul > li > a:hover {
+    color: var(--lg-brand);
   }
 
   header nav .nav-sections .nav-drop > ul > li > ul > li {
-    padding: 4px 0;
+    padding: 5px 0;
+    font-size: 14px;
   }
 
-  header nav .nav-sections .nav-drop > ul > li > ul a {
-    color: var(--muted-color);
-    font-weight: 400;
+  header nav .nav-sections .nav-drop > ul > li > ul a:any-link:hover {
+    color: var(--lg-brand);
+    text-decoration: underline;
   }
 
-  header nav .nav-sections .nav-drop > ul > li > ul a:hover {
-    color: var(--brand-color);
+  header nav .nav-tools ul {
+    gap: 8px;
   }
 }

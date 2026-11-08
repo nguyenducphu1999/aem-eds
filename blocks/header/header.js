@@ -17,6 +17,31 @@ function toggleMenu(nav, button, force) {
   if (!expanded) closeDrops(nav);
 }
 
+const SVG_ATTR = 'viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"';
+const ICONS = {
+  search: `<svg ${SVG_ATTR}><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg>`,
+  cart: `<svg ${SVG_ATTR}><path d="M3 4h2.5l2.2 10.2a1 1 0 0 0 1 .8h8.6a1 1 0 0 0 1-.8L20 8H6.2"/><circle cx="9.5" cy="19.5" r="1.4"/><circle cx="17" cy="19.5" r="1.4"/></svg>`,
+  user: `<svg ${SVG_ATTR}><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>`,
+};
+
+/** Link công cụ có tên quen thuộc (tìm kiếm, giỏ hàng, tài khoản) -> hiển thị icon, chữ chỉ để đọc màn hình */
+function decorateTools(nav) {
+  nav.querySelectorAll('.nav-tools a').forEach((a) => {
+    const text = a.textContent.trim();
+    const key = `${a.getAttribute('href') || ''} ${text}`
+      .toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd');
+    let icon = null;
+    if (/tim.?kiem|search/.test(key)) icon = ICONS.search;
+    else if (/gio.?hang|cart|basket/.test(key)) icon = ICONS.cart;
+    else if (/dang.?nhap|tai.?khoan|account|login|user/.test(key)) icon = ICONS.user;
+    if (!icon) return;
+    a.classList.add('nav-tool-icon');
+    a.setAttribute('aria-label', text);
+    a.title = text;
+    a.innerHTML = `${icon}<span class="nav-tool-label">${text}</span>`;
+  });
+}
+
 /**
  * Nhận diện 3 phần của header theo THỨ TỰ NỘI DUNG, không phụ thuộc vào đường kẻ ngang
  * (section break) trong document /nav:
@@ -75,6 +100,8 @@ export default async function decorate(block) {
     brandLink.className = '';
     brandLink.closest('.button-container')?.classList.remove('button-container');
   }
+
+  decorateTools(nav);
 
   // hamburger (mobile)
   const hamburger = document.createElement('div');
