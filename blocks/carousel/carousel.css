@@ -67,7 +67,7 @@
   z-index: 1;
 }
 
-/* nội dung chữ: mặc định chỉ để đọc màn hình; hiện thành thẻ kính khi dùng "Carousel (overlay)" hoặc khi focus bàn phím */
+/* nội dung chữ: mặc định hiện thành thẻ kính trên ảnh; dùng "Carousel (image-only)" để ẩn chữ khi ảnh banner đã có sẵn chữ (chữ vẫn có cho trình đọc màn hình) */
 .carousel .carousel-content {
   position: absolute;
   bottom: 56px;
@@ -84,7 +84,7 @@
   backdrop-filter: blur(24px) saturate(160%);
 }
 
-.carousel:not(.overlay) .carousel-content:not(:focus-within) {
+.carousel.image-only .carousel-content:not(:focus-within) {
   width: 1px;
   height: 1px;
   padding: 0;
